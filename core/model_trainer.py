@@ -166,6 +166,7 @@ class ModelTrainer:
             if len(coefs) == len(feature_names):
                 return pd.DataFrame({'Feature': feature_names, 'Coefficient': coefs})
             else:
-                print(f'Warning: Số lượng hệ số ({len(coefs)}) không khớp số lượng đặc trưng ({len(feature_names)}).')
-                return pd.DataFrame({'Coefficient': coefs})
+                print(f'Warning: Số lượng hệ số ({len(coefs)}) không khớp số lượng đặc trưng ({len(feature_names)}). Generating placeholder feature names.')
+                placeholder_features = [f'Feature_{i+1}' for i in range(len(coefs))]
+                return pd.DataFrame({'Feature': placeholder_features, 'Coefficient': coefs})
         return None
