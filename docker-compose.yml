@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  heart-disease-app:
+    build: .
+    container_name: heart-disease-predictor
+    environment:
+      - DISPLAY=:99
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ./data:/app/data
+      - ./output:/app/output
+    networks:
+      - app-network
+    depends_on:
+      - xvfb
+  xvfb:
+    image: jlesage/xvfb:latest
+    container_name: xvfb-server
+    environment:
+      - DISPLAY_WIDTH=1920
+      - DISPLAY_HEIGHT=1080
+    ports:
+      - "5900:5900" 
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  data:
+  output:
